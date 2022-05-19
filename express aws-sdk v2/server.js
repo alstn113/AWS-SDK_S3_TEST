@@ -1,10 +1,10 @@
 require("dotenv").config();
 const express = require("express");
-const AWSClient = require("./AWSClient");
+const awsClient = require("./libs/awsClient");
 const multer = require("multer");
 
 const app = express();
-const s3 = new AWSClient.AWS.S3({});
+const s3 = new awsClient.AWS.S3({});
 const upload = multer({});
 const S3_BUCKET = process.env.S3_BUCKET;
 
@@ -22,7 +22,11 @@ app.get("/v2/buckets", (_req, res) => {
 app.post("/v2/post", upload.single("file"), (req, res) => {
   try {
     const fileName = `${Date.now()}-${req.file.originalname}`;
-    let uploadParams = { Key: fileName, Bucket: S3_BUCKET, Body: req.file.buffer };
+    let uploadParams = {
+      Key: fileName,
+      Bucket: S3_BUCKET,
+      Body: req.file.buffer,
+    };
     s3.upload(uploadParams, (err, data) => {
       if (err) {
         console.log(err);
