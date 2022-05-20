@@ -54,6 +54,20 @@ app.post("/upload", upload.single("file"), async (req, res) => {
   }
 });
 
+// 단일 파일 삭제
+app.delete("/:fileName", async (req, res) => {
+  try {
+    const command = new AWS3.DeleteObjectCommand({
+      Bucket: bucket,
+      Key: req.params.fileName,
+    });
+    await s3Client.send(command);
+    res.send("Success");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 app.listen(3000, () => {
   console.log("SERVER IS RUNNING");
 });
