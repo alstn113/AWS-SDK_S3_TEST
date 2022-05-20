@@ -2,12 +2,12 @@
 
 ### aws-sdk 참고 링크
 
-https://docs.aws.amazon.com/ko_kr/sdk-for-javascript/v3/developer-guide/s3-example-creating-buckets.html
-https://docs.aws.amazon.com/ko_kr/sdk-for-javascript/v2/developer-guide/s3-example-creating-buckets.html
-https://www.youtube.com/watch?v=Rv7y0qtpzHA
-https://www.youtube.com/watch?v=6KbyN3RNjnQ
-https://www.youtube.com/watch?v=NZElg91l_ms&t=261s
+1. https://docs.aws.amazon.com/ko_kr/sdk-for-javascript/v3/developer-guide/s3-example-creating-buckets.html
+2. https://docs.aws.amazon.com/ko_kr/sdk-for-javascript/v2/developer-guide/s3-example-creating-buckets.html
+3. https://www.youtube.com/watch?v=Rv7y0qtpzHA
+4. https://www.youtube.com/watch?v=6KbyN3RNjnQ
+5. https://www.youtube.com/watch?v=NZElg91l_ms&t=261s
 
 ### aws-s3 bucket 참고 링크
 
-https://velog.io/@loakick/Github-Action-AWS-S3%EC%97%90-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0-8jk319fsq3
+1. https://velog.io/@loakick/Github-Action-AWS-S3%EC%97%90-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0-8jk319fsq3
