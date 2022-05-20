@@ -31,7 +31,7 @@ const uploadS3 = multer({
 });
 
 // 버킷 리스트 보여줌
-app.get("/buckets", (_req, res) => {
+app.get("/image/buckets", (_req, res) => {
   try {
     s3.listBuckets((err, data) => {
       if (err) {
@@ -45,7 +45,7 @@ app.get("/buckets", (_req, res) => {
 });
 
 // 단일 파일 업로드
-app.post("/upload", uploadS3.single("file"), (req, res) => {
+app.post("/image/upload", uploadS3.single("file"), (req, res) => {
   try {
     return res.send({ img: req.file.location, key: req.file.key });
   } catch (err) {
@@ -54,7 +54,7 @@ app.post("/upload", uploadS3.single("file"), (req, res) => {
 });
 
 // 단일 파일 삭제
-app.delete("/:fileName", (req, res) => {
+app.delete("/image/:fileName", (req, res) => {
   try {
     s3.deleteObject(
       { Bucket: bucket, Key: req.params.fileName },

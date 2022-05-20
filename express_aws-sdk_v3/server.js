@@ -19,7 +19,7 @@ const s3Client = new AWS3.S3Client({
 const upload = multer({});
 
 // 버킷 리스트 보여줌
-app.get("/buckets", async (_req, res) => {
+app.get("/image/buckets", async (_req, res) => {
   try {
     const command = new AWS3.ListBucketsCommand({});
     const response = await s3Client.send(command);
@@ -31,7 +31,7 @@ app.get("/buckets", async (_req, res) => {
 });
 
 // 단일 파일 업로드
-app.post("/upload", upload.single("file"), async (req, res) => {
+app.post("/image/upload", upload.single("file"), async (req, res) => {
   try {
     const fileName = `${Date.now()}-${req.file.originalname}`;
     let uploadParams = {
@@ -55,7 +55,7 @@ app.post("/upload", upload.single("file"), async (req, res) => {
 });
 
 // 단일 파일 삭제
-app.delete("/:fileName", async (req, res) => {
+app.delete("/image/:fileName", async (req, res) => {
   try {
     const command = new AWS3.DeleteObjectCommand({
       Bucket: bucket,
