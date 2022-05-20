@@ -1,39 +1,38 @@
 require("dotenv").config();
 const express = require("express");
-const awsClient = require("./libs/awsClient");
+const { AWS } = require("./libs/AWS");
 const multer = require("multer");
 
 const app = express();
-const s3 = new awsClient.AWS.S3({});
+const s3 = new AWS.S3({});
 const upload = multer({});
-const S3_BUCKET = process.env.S3_BUCKET;
-
+const Bucket = process.env.S3_BUCKET;
 // 버킷 리스트 보여줌
-app.get("/v2/buckets", (_req, res) => {
-  s3.listBuckets((err, data) => {
-    if (err) {
-      console.log(err);
-    }
-    res.send(data.Buckets);
-  });
+app.get("/buckets", (_req, res) => {
+  try {
+    s3.listBuckets((err, data) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(data.Buckets);
+    });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 // 단일 파일 업로드
-app.post("/v2/post", upload.single("file"), (req, res) => {
+app.post("/image", upload.single("file"), (req, res) => {
   try {
     const fileName = `${Date.now()}-${req.file.originalname}`;
     let uploadParams = {
       Key: fileName,
-      Bucket: S3_BUCKET,
+      Bucket,
       Body: req.file.buffer,
     };
     s3.upload(uploadParams, (err, data) => {
-      if (err) {
-        console.log(err);
-      }
-      //이거는 뭔가?
-      console.log(data);
-      res.send("success");
+      if (err) console.log(err);
+      res.send(data);
     });
   } catch (err) {
     console.log(err);

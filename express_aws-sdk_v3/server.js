@@ -9,7 +9,7 @@ const upload = multer({});
 const S3_BUCKET = process.env.S3_BUCKET;
 
 // 버킷 리스트 보여줌
-app.get("/v3/buckets", async (_req, res) => {
+app.get("/buckets", async (_req, res) => {
   try {
     const command = new AWS3.ListBucketsCommand({});
     const response = await s3Client.s3Instance.send(command);
@@ -21,7 +21,7 @@ app.get("/v3/buckets", async (_req, res) => {
 });
 
 // 단일 파일 업로드
-app.post("/v3/post", upload.single("file"), async (req, res) => {
+app.post("/image", upload.single("file"), async (req, res) => {
   try {
     const fileName = `${Date.now()}-${req.file.originalname}`;
     let uploadParams = {
@@ -32,7 +32,7 @@ app.post("/v3/post", upload.single("file"), async (req, res) => {
     const command = new AWS3.PutObjectAclCommand(uploadParams);
     const response = await s3Client.s3Instance.send(command);
     if (response.$metadata.httpStatusCode === 200) {
-      res.send("success");
+      res.send("Success");
     }
   } catch (err) {
     console.log(err);

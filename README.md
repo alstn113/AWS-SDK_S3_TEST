@@ -3,8 +3,10 @@
 ### aws-sdk 참고 링크
 
 https://docs.aws.amazon.com/ko_kr/sdk-for-javascript/v3/developer-guide/s3-example-creating-buckets.html
-https://docs.aws.amazon.com/ko_kr/sdk-for-javascript/v2/developer-guide/s3-example-photo-album-full.html
+https://docs.aws.amazon.com/ko_kr/sdk-for-javascript/v2/developer-guide/s3-example-creating-buckets.html
 https://www.youtube.com/watch?v=Rv7y0qtpzHA
+https://www.youtube.com/watch?v=6KbyN3RNjnQ
+https://www.youtube.com/watch?v=NZElg91l_ms&t=261s
 
 ### aws-s3 bucket 참고 링크
 
