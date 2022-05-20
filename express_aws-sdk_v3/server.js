@@ -1,19 +1,29 @@
 require("dotenv").config();
 const express = require("express");
+
 const AWS3 = require("@aws-sdk/client-s3");
-const { s3Client } = require("./libs/s3Client");
 const multer = require("multer");
 
 const app = express();
+
+const accessKeyId = process.env.S3_ACCESS_KEY;
+const secretAccessKey = process.env.S3_SECRET_KEY;
+const region = process.env.S3_REGION;
+const bucket = process.env.S3_BUCKET;
+
+const s3Client = new AWS3.S3Client({
+  region,
+  credentials: { accessKeyId, secretAccessKey },
+});
+
 const upload = multer({});
-const S3_BUCKET = process.env.S3_BUCKET;
 
 // 버킷 리스트 보여줌
 app.get("/buckets", async (_req, res) => {
   try {
     const command = new AWS3.ListBucketsCommand({});
-    const response = await s3Client.s3Instance.send(command);
-    res.send(response.Buckets);
+    const response = await s3Client.send(command);
+    res.send({ buckets: response.Buckets });
   } catch (err) {
     console.log(err);
     res.send(err);
@@ -21,18 +31,23 @@ app.get("/buckets", async (_req, res) => {
 });
 
 // 단일 파일 업로드
-app.post("/image", upload.single("file"), async (req, res) => {
+app.post("/upload", upload.single("file"), async (req, res) => {
   try {
     const fileName = `${Date.now()}-${req.file.originalname}`;
     let uploadParams = {
       Key: fileName,
-      Bucket: S3_BUCKET,
+      Bucket: bucket,
       Body: req.file.buffer,
     };
-    const command = new AWS3.PutObjectAclCommand(uploadParams);
-    const response = await s3Client.s3Instance.send(command);
+    const command = new AWS3.PutObjectCommand(uploadParams);
+    const response = await s3Client.send(command);
     if (response.$metadata.httpStatusCode === 200) {
-      res.send("Success");
+      res.send(
+        "Successfully uploaded object: " +
+          uploadParams.Bucket +
+          "/" +
+          uploadParams.Key
+      );
     }
   } catch (err) {
     console.log(err);
