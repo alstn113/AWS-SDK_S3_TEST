@@ -17,7 +17,11 @@ export class ImageController {
   // 단일 파일 업로드
   @Post('/upload')
   @UseInterceptors(FileInterceptor('file'))
+  // @UseInterceptors(
+  //   FileInterceptor('file', { limits: { fileSize: 1024 * 1024 * 15 } }),
+  // )
   async uploadImage(@UploadedFile() file: Express.Multer.File) {
+    console.log(file.size);
     return this.imageService.uploadImage(file);
   }
 
